@@ -64,13 +64,13 @@ def test_convert_pukiwiki2md_image():
         '&ref(あああああああああ(99))_進捗.png);') == '\n$refimg(あああああああああ(99))_進捗.webp)\n'
 
 
-
 def test_convert_pukiwiki2md_list():
     assert convert_pukiwiki2md.normal_list('---') == '- '
     assert convert_pukiwiki2md.normal_list('--') == '- '
     assert convert_pukiwiki2md.normal_list('---A') == '- A'
     assert convert_pukiwiki2md.normal_list('--B') == '- B'
     assert convert_pukiwiki2md.normal_list('-Codec') == '- Codec'
+
 
 def test_convert_pukiwiki2md_hash():
     assert convert_pukiwiki2md.hash('** 6進捗[#b286410f]') == '** 6進捗'
@@ -134,7 +134,7 @@ def test_convert_pukiwiki2md_link():
 
 
 def test_table0():
-    str = convert_pukiwiki2md.convert('''
+    pukiwiki_text = convert_pukiwiki2md.convert('''
 *プランの比較
 |プラン|容量|月額|h
 |||RIGHT:|c
@@ -144,7 +144,7 @@ def test_table0():
 |ビジネスプロ|500GB|4,628円|
 |マネージドサーバ|700GB|12,960円|
 ''')
-    converted = '''
+    conveted_markdown_text = '''
 
 
 # プランの比較
@@ -156,18 +156,17 @@ def test_table0():
 |ビジネスプロ|500GB|4,628円|
 |マネージドサーバ|700GB|12,960円|
 '''
-    print(converted)
-    assert str == converted
+    assert pukiwiki_text == conveted_markdown_text
 
 
 def test_table_no_align():
-    str = '''|~エディションの種類|~IOT HUB ユニットごとの料金 (1 か月あたり)	|~IOT HUB ユニットごとのメッセージの合計数 (1 日あたり)|~メッセージの課金サイズ|~設置可能な台数(1日140回送信)|
+    pukiwiki_text = '''|~エディションの種類|~IOT HUB ユニットごとの料金 (1 か月あたり)	|~IOT HUB ユニットごとのメッセージの合計数 (1 日あたり)|~メッセージの課金サイズ|~設置可能な台数(1日140回送信)|
 |無料|無料|8,000|0.5 KB|57|
 |S1|&yen;2,800|400,000|4 KB|2857|
 |S2|&yen;28,000|6,000,000|4 KB|42857|
 |S3|&yen;280,000|300,000,000|4 KB|2142857|
 '''
-    converted = '''
+    conveted_markdown_text = '''
 
 |エディションの種類|IOT HUB ユニットごとの料金 (1 か月あたり)	|IOT HUB ユニットごとのメッセージの合計数 (1 日あたり)|メッセージの課金サイズ|設置可能な台数(1日140回送信)|
 |-|-|-|-|-|
@@ -176,11 +175,11 @@ def test_table_no_align():
 |S2|&yen;28,000|6,000,000|4 KB|42857|
 |S3|&yen;280,000|300,000,000|4 KB|2142857|
 '''
-    assert convert_pukiwiki2md.table(str) == converted
+    assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
 
 def test_table3():
-    str = '''|TLEFT:|||c
+    pukiwiki_text = '''|TLEFT:|||c
 |~制約 |~備考|
 |SSL対応 | HTTPS化してセキュリティを高める。AppleのSafariは、証明書の最大有効期限が398日のため398日で設定する。|
 |独自ドメイン割当可能 | トアックのHPのサブドメインを割り当てる予定|
@@ -189,7 +188,7 @@ def test_table3():
 |Webアプリを利用する顧客はログイン中のアカウントに関連するデータのみ参照可能 |　|
 |PC, タブレット, スマホで利用できる |　|
 '''
-    converted = '''
+    conveted_markdown_text = '''
 
 |制約 |備考|
 |-|-|
@@ -200,49 +199,49 @@ def test_table3():
 |Webアプリを利用する顧客はログイン中のアカウントに関連するデータのみ参照可能 |　|
 |PC, タブレット, スマホで利用できる |　|
 '''
-    assert convert_pukiwiki2md.table(str) == converted
+    assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
 
 def test_table_header_align():
-    str = '''|TLEFT:||c
+    pukiwiki_text = '''|TLEFT:||c
 |~やること|~やらないこと|
 ファイルアップロード|リアルタイムでのデータ分析・可視化 |
 |ユーザー管理機能| |
 '''
-    converted = '''
+    conveted_markdown_text = '''
 
 |やること|やらないこと|
 |-|-|
 ファイルアップロード|リアルタイムでのデータ分析・可視化 |
 |ユーザー管理機能| |
 '''
-    assert convert_pukiwiki2md.table(str) == converted
+    assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
 
 def test_table_align():
-    str = '''|TLEFT:|||c
+    pukiwiki_text = '''|TLEFT:|||c
 |~制約|~備考|
 |SSL対応|HTTPS化してセキュリティを高める。AppleのSafariは、証明書の最大有効期限が398日のため398日で設定する。|
 |PDFでレポート出力可能|ブラウザの印刷機能を利用|
 |PC,タブレット,スマホで利用できる|　|'''
-    converted = '''
+    conveted_markdown_text = '''
 
 |制約|備考|
 |-|-|
 |SSL対応|HTTPS化してセキュリティを高める。AppleのSafariは、証明書の最大有効期限が398日のため398日で設定する。|
 |PDFでレポート出力可能|ブラウザの印刷機能を利用|
 |PC,タブレット,スマホで利用できる|　|'''
-    assert convert_pukiwiki2md.table(str) == converted
+    assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
 
 def test_table_no_header():
-    str = '''|TLEFT:||c
+    pukiwiki_text = '''|TLEFT:||c
 |セキュリティ|SSL対応|
 |ドメイン|独自ドメイン割り当て可能|
 |対応ブラウザ|Chrome,Safari,Firefox,IE,Edge|
 |UI|PC,タブレット,スマホへのレスポンシブ対応|
 '''
-    converted = '''
+    conveted_markdown_text = '''
 
 |||
 |-|-|-
@@ -251,7 +250,7 @@ def test_table_no_header():
 |対応ブラウザ|Chrome,Safari,Firefox,IE,Edge|
 |UI|PC,タブレット,スマホへのレスポンシブ対応|
 '''
-    assert convert_pukiwiki2md.table(str) == converted
+    assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
 
 def test_convert_pukiwiki2md_combination():
@@ -264,3 +263,22 @@ def test_convert_pukiwiki2md_combination():
     assert convert_pukiwiki2md.convert('''* 前提リスト[#s3350248]
 *dropboxを別の方法でマウントする''') == '''#  前提リスト
 # dropboxを別の方法でマウントする'''
+
+
+def test_convert_pukiwiki2md_combination2():
+    pukiwiki_text = '''
+|TLEFT:||||||||||c
+|アイテム|名称|図面|A|年月日|発行|申請書|状況|子アイテム|子名称|
+|202182000240|RS-HOGE|なし|hoge|中|A|7|X|025v101|RS-HOGE|
+|201879000120|RS-HGE-CBZ|なし|hoge|2020/10/8|A|7|X|025v101|RS-HOGE|
+'''
+    conveted_markdown_text = '''
+
+
+|||||||||||
+|-|-|-|-|-|-|-|-|-|-|-
+|アイテム|名称|図面|A|年月日|発行|申請書|状況|子アイテム|子名称|
+|202182000240|RS-HOGE|なし|hoge|中|A|7|X|025v101|RS-HOGE|
+|201879000120|RS-HGE-CBZ|なし|hoge|2020/10/8|A|7|X|025v101|RS-HOGE|
+'''
+    assert convert_pukiwiki2md.convert(pukiwiki_text) == conveted_markdown_text

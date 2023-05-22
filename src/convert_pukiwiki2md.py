@@ -65,7 +65,7 @@ def table_attr(txt):
     txt = re.sub(
         r"(TLEFT|tleft|LEFT|left|RIGHT|right|tright|TRIGHT|CENTER|center|TCENTER|tcenter):", "", txt)
     txt = re.sub(r"(BGCOLOR|COLOR|SIZE)\(.[^:]*\):", "", txt)
-    txt = re.sub(r"FC:#[A-Fa-f0-9]{6}", '', txt, flags=re.MULTILINE)
+    txt = re.sub(r"(FC|CC):#[A-Fa-f0-9]{6} ?", '', txt, flags=re.MULTILINE)
     return txt
 
 
