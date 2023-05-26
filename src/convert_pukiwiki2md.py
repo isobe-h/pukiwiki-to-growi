@@ -32,6 +32,9 @@ def lsx(txt):
     txt = re.sub("except=.*,", "", txt, flags=re.MULTILINE)
     txt = re.sub(",info", "", txt, flags=re.MULTILINE)
     txt = re.sub("num=:", "num=", txt, flags=re.MULTILINE)
+    txt = re.sub(",reverse=on", "reverse=true",txt,flags=re.MULTILINE)
+    txt = re.sub(",reverse=off", "",txt,flags=re.MULTILINE)
+    txt = re.sub(",reverse=false", "",txt,flags=re.MULTILINE)
     return txt
 
 
@@ -52,7 +55,7 @@ def misc(txt):
     # newline
     txt = re.sub("&br|#br;", "\n", txt, flags=re.MULTILINE)
     # 打ち消し
-    txt = re.sub("%%", "~~", txt, flags=re.MULTILINE)
+    txt = re.sub("%%", "~~", txt, flags=re.MULTILINE) 
     return txt
 
 def hash(txt):
