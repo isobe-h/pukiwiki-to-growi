@@ -18,7 +18,7 @@ cd "${DUMP_DIR}"
 # Process each file that matches PAGE_FILE_NAME
 files=($(find . -name "${PAGE_FILE_NAME}"))
 for file_path in "${files[@]}"; do  # Get the relative file path, base path, and page name
-  relative_file_path=$(realpath --relative-to="${SCRIPT_DIR}" "${file_path}")
+  relative_file_path=$(python -c 'import os.path; print(os.path.relpath("'"${file_path}"'", "'"${SCRIPT_DIR}"'"))')
   base_path=$(dirname "${relative_file_path}")
   page_name=$(echo "${file_path}" | sed -e 's#/page.txt##' | sed -e 's#^\./##')
   # Change directory to SCRIPT_DIR
