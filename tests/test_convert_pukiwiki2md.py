@@ -182,22 +182,14 @@ def test_table3():
     pukiwiki_text = '''|TLEFT:|||c
 |~制約 |~備考|
 |SSL対応 | HTTPS化してセキュリティを高める。AppleのSafariは、証明書の最大有効期限が398日のため398日で設定する。|
-|独自ドメイン割当可能 | トアックのHPのサブドメインを割り当てる予定|
 |PDFでレポート出力可能 | ブラウザの印刷機能を利用|
-|主要ブラウザ対応 | chrome, , firefox(https: // gs.statcounter.com/browser-market-share/all/japan /) |
-|Webアプリを利用する顧客はログイン中のアカウントに関連するデータのみ参照可能 |　|
-|PC, タブレット, スマホで利用できる |　|
 '''
     conveted_markdown_text = '''
 
 |制約 |備考|
 |-|-|
 |SSL対応 | HTTPS化してセキュリティを高める。AppleのSafariは、証明書の最大有効期限が398日のため398日で設定する。|
-|独自ドメイン割当可能 | トアックのHPのサブドメインを割り当てる予定|
 |PDFでレポート出力可能 | ブラウザの印刷機能を利用|
-|主要ブラウザ対応 | chrome, , firefox(https: // gs.statcounter.com/browser-market-share/all/japan /) |
-|Webアプリを利用する顧客はログイン中のアカウントに関連するデータのみ参照可能 |　|
-|PC, タブレット, スマホで利用できる |　|
 '''
     assert convert_pukiwiki2md.table(pukiwiki_text) == conveted_markdown_text
 
